@@ -1,0 +1,233 @@
+---
+import { profile } from '../../data/profile';
+import { ui } from '../../i18n/es';
+import IconAsset from '../ui/IconAsset.astro';
+---
+
+<section class="hero">
+  <div class="hero__wordmark" aria-hidden="true">{ui.hero.wordmark}</div>
+
+  <div class="hero__portrait">
+    <div class="hero__glow"></div>
+    <img class="hero__portrait-image" src="/assets/hero/portrait-placeholder.png" alt="Retrato temporal de Hugo Mendoza" />
+  </div>
+
+  <div class="hero__copy">
+    <h1 class="hero__title">{ui.hero.title}</h1>
+    <p class="hero__description">{ui.hero.description}</p>
+    <div class="hero__actions">
+      <a class="button button--primary" href="/proyectos">{ui.hero.primaryCta} <IconAsset name="arrow-right" size={18} /></a>
+      <a class="button button--outline" href={`mailto:${profile.email}`}>{ui.hero.secondaryCta} <IconAsset name="mail" size={18} /></a>
+    </div>
+  </div>
+
+  <aside class="hero__availability" aria-label="Disponibilidad">
+    <span class="hero__availability-dot"></span>
+    <div class="hero__availability-content">
+      <strong class="hero__availability-title">{ui.hero.availabilityTitle}</strong>
+      <small class="hero__availability-meta">{ui.hero.availabilityMeta}</small>
+    </div>
+  </aside>
+
+  <div class="hero__social-links" aria-label="Redes sociales">
+    {profile.socialLinks.map((link) => (
+      <a class="hero__social-link" href={link.href} target="_blank" rel="noreferrer" aria-label={link.label}>
+        <IconAsset name={link.icon} size={19} />
+      </a>
+    ))}
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: min(760px, calc(100vh - 120px));
+    overflow: hidden;
+    border-bottom: 1px solid var(--color-border-subtle);
+    padding: clamp(32px, 5vw, 64px) var(--container-padding) 48px;
+  }
+
+  .hero__wordmark {
+    position: absolute;
+    inset: 40px 6% auto;
+    color: var(--color-primary);
+    font-size: clamp(4.7rem, 13vw, 11rem);
+    font-weight: 850;
+    line-height: 0.88;
+    opacity: 0.055;
+    pointer-events: none;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .hero__portrait {
+    position: absolute;
+    right: 50%;
+    bottom: 0;
+    z-index: 1;
+    width: min(480px, 46vw);
+    transform: translateX(50%);
+  }
+
+  .hero__portrait::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 34%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0), #ffffff 82%);
+    content: "";
+  }
+
+  .hero__portrait-image {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+  }
+
+  .hero__glow {
+    position: absolute;
+    right: 8%;
+    bottom: 18%;
+    left: 8%;
+    height: 44%;
+    border-radius: 50%;
+    background: rgba(233, 69, 96, 0.24);
+    filter: blur(44px);
+  }
+
+  .hero__copy {
+    position: absolute;
+    bottom: 118px;
+    left: var(--container-padding);
+    z-index: 2;
+    width: min(420px, 38vw);
+  }
+
+  .hero__title {
+    margin: 0;
+    font-size: clamp(3rem, 5.6vw, 5.2rem);
+    font-weight: 800;
+    line-height: 1.02;
+    letter-spacing: 0;
+  }
+
+  .hero__description {
+    max-width: 390px;
+    margin: 22px 0 0;
+    color: var(--color-text-secondary);
+    font-size: 1.02rem;
+    line-height: 1.7;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 30px;
+  }
+
+  .hero__availability {
+    position: absolute;
+    right: var(--container-padding);
+    bottom: 170px;
+    z-index: 2;
+    display: flex;
+    min-width: 220px;
+    align-items: start;
+    gap: 12px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: rgba(255, 255, 255, 0.86);
+    padding: 22px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .hero__availability-dot {
+    width: 8px;
+    height: 8px;
+    margin-top: 6px;
+    border-radius: 50%;
+    background: var(--color-secondary);
+  }
+
+  .hero__availability-title,
+  .hero__availability-meta {
+    display: block;
+  }
+
+  .hero__availability-meta {
+    margin-top: 8px;
+    color: var(--color-text-secondary);
+  }
+
+  .hero__social-links {
+    position: absolute;
+    right: 0;
+    bottom: 30px;
+    left: 0;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+  }
+
+  .hero__social-link {
+    color: var(--color-text-muted);
+    opacity: 0.64;
+    transition: color var(--transition-base), transform var(--transition-base);
+  }
+
+  .hero__social-link:hover {
+    color: var(--color-secondary);
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 860px) {
+    .hero {
+      min-height: 760px;
+      padding-top: 26px;
+    }
+
+    .hero__portrait {
+      top: 84px;
+      bottom: auto;
+      width: min(420px, 72vw);
+    }
+
+    .hero__copy {
+      right: 24px;
+      bottom: 104px;
+      left: 24px;
+      width: auto;
+      text-align: center;
+    }
+
+    .hero__description {
+      margin-inline: auto;
+    }
+
+    .hero__actions {
+      justify-content: center;
+    }
+
+    .hero__availability {
+      display: none;
+    }
+  }
+
+  @media (max-width: 540px) {
+    .hero {
+      min-height: 760px;
+    }
+
+    .hero__title {
+      font-size: clamp(3.2rem, 12vw, 4.4rem);
+    }
+
+    .hero__actions .button {
+      flex: 1 1 150px;
+    }
+  }
+</style>

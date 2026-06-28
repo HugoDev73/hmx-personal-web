@@ -1,0 +1,156 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/project/ProjectCard.astro';
+import IconAsset from '../../components/ui/IconAsset.astro';
+import { projects } from '../../data/projects';
+import { ui } from '../../i18n/es';
+---
+
+<BaseLayout title="Proyectos - Hugo Mendoza" description={ui.projects.description}>
+  <section class="projects-page__hero">
+    <div class="container projects-page__hero-grid">
+      <div class="projects-page__hero-copy">
+        <p class="eyebrow">{ui.projects.eyebrow}</p>
+        <h1 class="projects-page__title">{ui.projects.title}</h1>
+        <p class="projects-page__lead">{ui.projects.description}</p>
+        <a class="text-link projects-page__talk-link" href="mailto:hola@hmx.dev">{ui.projects.talk} <span class="text-link__icon" aria-hidden="true"><IconAsset name="mail" size={18} /></span></a>
+      </div>
+      <div class="projects-page__brand-shape" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="projects-page__list">
+    <div class="container">
+      <div class="projects-page__filters">
+        <div class="projects-page__filter-chips" aria-label="Filtros de proyectos">
+          {ui.projects.filters.map((filter, index) => (
+            <span class:list={['chip', { 'chip--active': index === 0 }]}>{filter}</span>
+          ))}
+        </div>
+        <span class="chip projects-page__sort">{ui.projects.sort}⌄</span>
+      </div>
+
+      <div class="projects-page__grid">
+        {projects.map((project) => <ProjectCard project={project} />)}
+      </div>
+
+      <div class="projects-page__more">
+        <a class="button button--outline" href="https://github.com/hugomendoza" target="_blank" rel="noreferrer">
+          {ui.projects.moreGithub} <IconAsset name="github" size={18} />
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .projects-page__hero {
+    padding-block: clamp(72px, 11vw, 152px) clamp(48px, 7vw, 92px);
+  }
+
+  .projects-page__hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 360px;
+    align-items: center;
+    gap: 48px;
+  }
+
+  .projects-page__title {
+    margin: 0;
+    font-size: clamp(4rem, 10vw, 7.8rem);
+    font-weight: 850;
+    line-height: 0.95;
+    letter-spacing: 0;
+  }
+
+  .projects-page__lead {
+    max-width: 520px;
+    margin: 26px 0 0;
+    color: var(--color-text-secondary);
+    font-size: 1.05rem;
+    line-height: 1.75;
+  }
+
+  .projects-page__talk-link {
+    margin-top: 28px;
+    color: var(--color-secondary);
+  }
+
+  .projects-page__brand-shape {
+    display: grid;
+    grid-template-columns: repeat(3, 58px);
+    grid-auto-rows: 58px;
+    justify-content: center;
+    gap: 12px;
+    filter: drop-shadow(0 24px 64px rgba(233, 69, 96, 0.18));
+  }
+
+  .projects-page__brand-shape span {
+    border-radius: 16px;
+    background: rgba(233, 69, 96, 0.12);
+  }
+
+  .projects-page__brand-shape span:nth-child(6) {
+    background: var(--color-secondary);
+  }
+
+  .projects-page__list {
+    padding-bottom: clamp(72px, 10vw, 128px);
+  }
+
+  .projects-page__filters {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 36px;
+  }
+
+  .projects-page__filter-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .projects-page__sort {
+    min-width: 130px;
+    justify-content: center;
+  }
+
+  .projects-page__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(22px, 3vw, 32px);
+  }
+
+  .projects-page__more {
+    display: flex;
+    justify-content: center;
+    margin-top: 56px;
+  }
+
+  @media (max-width: 980px) {
+    .projects-page__hero-grid,
+    .projects-page__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 720px) {
+    .projects-page__hero-grid,
+    .projects-page__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .projects-page__brand-shape {
+      display: none;
+    }
+
+    .projects-page__filters {
+      align-items: start;
+      flex-direction: column;
+    }
+  }
+</style>

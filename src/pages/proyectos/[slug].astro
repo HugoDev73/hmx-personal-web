@@ -1,0 +1,245 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import IconAsset from '../../components/ui/IconAsset.astro';
+import { projects } from '../../data/projects';
+import { ui } from '../../i18n/es';
+
+export function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+---
+
+<BaseLayout title={`${project.title} - Hugo Mendoza`} description={project.summary}>
+  <article class="project-detail">
+    <section class="project-detail__hero">
+      <div class="container project-detail__hero-grid">
+        <div class="project-detail__copy">
+          <a class="project-detail__back-link" href="/proyectos">&larr; {ui.detail.back}</a>
+          <p class="eyebrow">{ui.detail.featured}</p>
+          <h1 class="project-detail__title">{project.title}</h1>
+          <p class="project-detail__lead">{project.summary}</p>
+          <div class="project-detail__chips">
+            {project.technologies.map((tech) => <span class="chip">{tech}</span>)}
+          </div>
+          <div class="project-detail__actions">
+            <a class="button button--primary" href={project.links.live}>{ui.detail.live} <IconAsset name="external-link" size={18} /></a>
+            <a class="button button--outline" href={project.links.github}>{ui.detail.github} <IconAsset name="github" size={18} /></a>
+          </div>
+        </div>
+        <div class="project-detail__hero-media">
+          <img class="project-detail__hero-image" src={project.images.hero} alt={`Imagen principal de ${project.title}`} />
+        </div>
+      </div>
+    </section>
+
+    <section class="project-detail__metadata container" aria-label="Metadata del proyecto">
+      <div class="project-detail__metadata-item"><span>Fecha</span><strong>{project.displayDate}</strong></div>
+      <div class="project-detail__metadata-item"><span>Rol</span><strong>{project.role}</strong></div>
+      <div class="project-detail__metadata-item"><span>Duración</span><strong>{project.duration}</strong></div>
+      <div class="project-detail__metadata-item"><span>Tipo</span><strong>{project.type}</strong></div>
+    </section>
+
+    <section class="project-detail__section container">
+      <div class="project-detail__content-grid">
+        <div class="project-detail__text-content">
+          <h2 class="project-detail__section-title">{ui.detail.about}</h2>
+          {project.about.map((paragraph) => <p class="project-detail__paragraph">{paragraph}</p>)}
+        </div>
+        <img class="project-detail__content-image" src={project.images.cover} alt={`Captura de ${project.title}`} loading="lazy" />
+      </div>
+    </section>
+
+    <section class="project-detail__section container">
+      <h2 class="project-detail__section-title">{ui.detail.features}</h2>
+      <ul class="project-detail__features">
+        {project.features.map((feature) => <li class="project-detail__feature">{feature}</li>)}
+      </ul>
+    </section>
+
+    <section class="project-detail__section project-detail__section--gallery container">
+      <h2 class="project-detail__section-title">{ui.detail.gallery}</h2>
+      <div class="project-detail__gallery">
+        {project.images.gallery.map((image) => <img class="project-detail__gallery-image" src={image} alt={`Captura de ${project.title}`} loading="lazy" />)}
+      </div>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .project-detail__hero {
+    padding-block: clamp(56px, 9vw, 120px) 48px;
+    background:
+      radial-gradient(circle at 78% 42%, rgba(233, 69, 96, 0.11), transparent 30%),
+      #ffffff;
+  }
+
+  .project-detail__hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(420px, 1.2fr);
+    align-items: center;
+    gap: clamp(36px, 6vw, 80px);
+  }
+
+  .project-detail__back-link {
+    display: inline-flex;
+    margin-bottom: 34px;
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+    font-weight: 650;
+  }
+
+  .project-detail__title {
+    margin: 0;
+    font-size: clamp(3.4rem, 7vw, 6rem);
+    font-weight: 850;
+    line-height: 0.98;
+    letter-spacing: 0;
+  }
+
+  .project-detail__lead {
+    max-width: 520px;
+    margin: 24px 0 0;
+    color: var(--color-text-secondary);
+    font-size: 1.05rem;
+    line-height: 1.75;
+  }
+
+  .project-detail__chips,
+  .project-detail__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .project-detail__chips {
+    margin-top: 24px;
+  }
+
+  .project-detail__actions {
+    margin-top: 32px;
+  }
+
+  .project-detail__hero-image {
+    width: 100%;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+  }
+
+  .project-detail__metadata {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    background: var(--color-border);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .project-detail__metadata-item {
+    background: #ffffff;
+    padding: 26px;
+  }
+
+  .project-detail__metadata-item span {
+    display: block;
+    color: var(--color-text-muted);
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+
+  .project-detail__metadata-item strong {
+    display: block;
+    margin-top: 8px;
+    font-size: 0.95rem;
+  }
+
+  .project-detail__section {
+    padding-top: clamp(64px, 9vw, 112px);
+  }
+
+  .project-detail__content-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(360px, 1fr);
+    gap: clamp(36px, 6vw, 80px);
+    align-items: start;
+  }
+
+  .project-detail__section-title {
+    margin: 0 0 22px;
+    font-size: clamp(1.7rem, 3vw, 2.4rem);
+  }
+
+  .project-detail__paragraph {
+    color: var(--color-text-secondary);
+    line-height: 1.8;
+  }
+
+  .project-detail__content-image,
+  .project-detail__gallery-image {
+    width: 100%;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .project-detail__features {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 40px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .project-detail__feature {
+    position: relative;
+    padding-left: 28px;
+    color: var(--color-text-secondary);
+    line-height: 1.65;
+  }
+
+  .project-detail__feature::before {
+    position: absolute;
+    top: 0.45em;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    border: 2px solid var(--color-secondary);
+    border-radius: 50%;
+    content: "";
+  }
+
+  .project-detail__section--gallery {
+    padding-bottom: clamp(72px, 10vw, 128px);
+  }
+
+  .project-detail__gallery {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .project-detail__gallery-image {
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+  }
+
+  @media (max-width: 900px) {
+    .project-detail__hero-grid,
+    .project-detail__content-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .project-detail__metadata,
+    .project-detail__features,
+    .project-detail__gallery {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

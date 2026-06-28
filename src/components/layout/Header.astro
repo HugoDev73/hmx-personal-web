@@ -1,0 +1,150 @@
+---
+import { profile } from '../../data/profile';
+import { ui } from '../../i18n/es';
+
+type Props = {
+  currentPath: string;
+};
+
+const { currentPath } = Astro.props;
+---
+
+<header class="site-header">
+  <a class="site-header__brand" href="/" aria-label={`${profile.name} inicio`}>
+    <img class="site-header__brand-image" src="/assets/brand/logo.svg" alt="" />
+    <span class="site-header__brand-text">{profile.initials}<b>.</b></span>
+  </a>
+
+  <nav class="site-header__nav" aria-label="Navegación principal">
+    {ui.nav.map((item) => {
+      const isActive = item.href === '/' ? currentPath === '/' : currentPath.startsWith(item.href);
+      const isContact = item.label === 'Contacto';
+      return (
+        <a class:list={['site-header__nav-link', { 'site-header__nav-link--active': isActive, 'site-header__nav-link--contact': isContact }]} href={item.href}>
+          {item.label}
+          {isContact && <span aria-hidden="true">↗</span>}
+        </a>
+      );
+    })}
+  </nav>
+
+  <button class="site-header__menu-button" aria-label="Abrir menú" type="button">
+    <span class="site-header__menu-line"></span>
+    <span class="site-header__menu-line"></span>
+    <span class="site-header__menu-line"></span>
+  </button>
+</header>
+
+<style>
+  .site-header {
+    display: flex;
+    min-height: 86px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    border-bottom: 1px solid var(--color-border-subtle);
+    padding-inline: var(--container-padding);
+  }
+
+  .site-header__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: clamp(1.6rem, 3vw, 2.3rem);
+    font-weight: 780;
+  }
+
+  .site-header__brand-image {
+    width: 34px;
+    height: 34px;
+  }
+
+  .site-header__brand-text {
+    display: none;
+  }
+
+  .site-header__brand-text b {
+    color: var(--color-secondary);
+  }
+
+  .site-header__nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: clamp(24px, 4vw, 54px);
+  }
+
+  .site-header__nav-link {
+    position: relative;
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-text-primary);
+    font-size: 0.91rem;
+    font-weight: 650;
+  }
+
+  .site-header__nav-link--active {
+    color: var(--color-secondary);
+  }
+
+  .site-header__nav-link--active::after {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--color-secondary);
+    content: "";
+    transform: translateX(-50%);
+  }
+
+  .site-header__nav-link--contact {
+    min-height: 46px;
+    border-radius: var(--radius-pill);
+    background: var(--color-primary);
+    padding-inline: 22px;
+    color: #ffffff;
+  }
+
+  .site-header__nav-link--contact.site-header__nav-link--active::after {
+    display: none;
+  }
+
+  .site-header__menu-button {
+    display: none;
+    width: 48px;
+    height: 48px;
+    border: 0;
+    background: transparent;
+    padding: 8px;
+  }
+
+  .site-header__menu-line {
+    display: block;
+    height: 4px;
+    margin: 5px 0;
+    border-radius: var(--radius-pill);
+    background: var(--color-primary);
+  }
+
+  @media (max-width: 760px) {
+    .site-header__nav {
+      display: none;
+    }
+
+    .site-header__menu-button {
+      display: block;
+    }
+
+    .site-header__brand-image {
+      display: none;
+    }
+
+    .site-header__brand-text {
+      display: inline;
+    }
+  }
+</style>

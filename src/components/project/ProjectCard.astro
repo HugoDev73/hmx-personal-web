@@ -1,0 +1,117 @@
+---
+import type { Project } from '../../data/projects';
+import IconAsset from '../ui/IconAsset.astro';
+
+type Props = {
+  project: Project;
+  compact?: boolean;
+};
+
+const { project, compact = false } = Astro.props;
+---
+
+<article class:list={['project-card', { 'project-card--compact': compact }]}>
+  <a class="project-card__media" href={`/proyectos/${project.slug}`} aria-label={`Ver proyecto ${project.title}`}>
+    <img class="project-card__image" src={project.images.cover} alt={`Mockup de ${project.title}`} loading="lazy" />
+  </a>
+  <div class="project-card__body">
+    <div class="project-card__content">
+      <h3 class="project-card__title">{project.title}</h3>
+      {!compact && <p class="project-card__summary">{project.summary}</p>}
+      <div class="project-card__chips">
+        {project.technologies.slice(0, compact ? 4 : 3).map((tech) => <span class="chip">{tech}</span>)}
+      </div>
+    </div>
+    <a class="icon-link" href={`/proyectos/${project.slug}`} aria-label={`Abrir ${project.title}`}>
+      <IconAsset name="arrow-up-right" size={19} />
+    </a>
+  </div>
+</article>
+
+<style>
+  .project-card {
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    background: #ffffff;
+    box-shadow: var(--shadow-sm);
+    transition:
+      transform var(--transition-base),
+      border-color var(--transition-base),
+      box-shadow var(--transition-base);
+  }
+
+  .project-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--color-border-strong);
+    box-shadow: var(--shadow-md);
+  }
+
+  .project-card__media {
+    display: block;
+    padding: 14px 14px 0;
+  }
+
+  .project-card__image {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    border-radius: 18px;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .project-card__body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 24px;
+  }
+
+  .project-card__title {
+    margin: 0;
+    font-size: clamp(1.1rem, 2vw, 1.35rem);
+    line-height: 1.2;
+  }
+
+  .project-card__summary {
+    margin: 10px 0 0;
+    color: var(--color-text-secondary);
+    line-height: 1.65;
+  }
+
+  .project-card__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 16px;
+  }
+
+  .project-card--compact {
+    display: grid;
+    grid-template-columns: minmax(220px, 0.9fr) 1fr;
+  }
+
+  .project-card--compact .project-card__media {
+    padding: 12px;
+  }
+
+  .project-card--compact .project-card__image {
+    height: 100%;
+    min-height: 160px;
+  }
+
+  .project-card--compact .project-card__body {
+    padding-left: 0;
+  }
+
+  @media (max-width: 760px) {
+    .project-card--compact {
+      grid-template-columns: 1fr;
+    }
+
+    .project-card--compact .project-card__body {
+      padding: 18px;
+    }
+  }
+</style>

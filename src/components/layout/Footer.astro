@@ -1,0 +1,89 @@
+---
+import { profile } from '../../data/profile';
+import { ui } from '../../i18n/es';
+import IconAsset from '../ui/IconAsset.astro';
+---
+
+<footer class="site-footer">
+  <div class="site-footer__content">
+    <a class="site-footer__brand" href="/">
+      <img class="site-footer__brand-image" src="/assets/brand/logo.svg" alt="" />
+      <span class="site-footer__brand-text">{profile.name}</span>
+    </a>
+    <p class="site-footer__description">{ui.footer.text}</p>
+  </div>
+
+  <div class="site-footer__links">
+    {profile.socialLinks.map((link) => (
+      <a class="site-footer__link" href={link.href} target="_blank" rel="noreferrer">
+        <IconAsset name={link.icon} size={16} />
+        <span>{link.label}</span>
+      </a>
+    ))}
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 32px;
+    border-top: 1px solid var(--color-border-subtle);
+    padding: 44px var(--container-padding);
+  }
+
+  .site-footer__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 750;
+  }
+
+  .site-footer__brand-image {
+    flex: 0 0 28px;
+    width: 28px;
+    height: 28px;
+    max-width: 28px;
+    object-fit: contain;
+  }
+
+  .site-footer__description {
+    max-width: 440px;
+    margin: 16px 0 0;
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+  }
+
+  .site-footer__links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 18px;
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+    font-weight: 650;
+  }
+
+  .site-footer__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: color var(--transition-base);
+  }
+
+  .site-footer__link:hover {
+    color: var(--color-secondary);
+  }
+
+  @media (max-width: 700px) {
+    .site-footer {
+      align-items: start;
+      flex-direction: column;
+    }
+
+    .site-footer__links {
+      justify-content: flex-start;
+    }
+  }
+</style>
