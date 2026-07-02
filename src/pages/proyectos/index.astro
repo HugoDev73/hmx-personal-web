@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectCard from '../../components/project/ProjectCard.astro';
-import IconAsset from '../../components/ui/IconAsset.astro';
+import AssetIcon from '../../components/ui/AssetIcon.astro';
 import { projects } from '../../data/projects';
 import { ui } from '../../i18n/es';
 ---
@@ -13,7 +13,7 @@ import { ui } from '../../i18n/es';
         <p class="eyebrow">{ui.projects.eyebrow}</p>
         <h1 class="projects-page__title">{ui.projects.title}</h1>
         <p class="projects-page__lead">{ui.projects.description}</p>
-        <a class="text-link projects-page__talk-link" href="mailto:hola@hmx.dev">{ui.projects.talk} <span class="text-link__icon" aria-hidden="true"><IconAsset name="mail" size={18} /></span></a>
+        <a class="text-link projects-page__talk-link" href="mailto:hola@hmx.dev">{ui.projects.talk} <span class="text-link__icon" aria-hidden="true"><AssetIcon src="/assets/icons/mail.svg" size={18} /></span></a>
       </div>
       <div class="projects-page__brand-shape" aria-hidden="true">
         <span></span><span></span><span></span><span></span><span></span><span></span>
@@ -38,7 +38,7 @@ import { ui } from '../../i18n/es';
 
       <div class="projects-page__more">
         <a class="button button--outline" href="https://github.com/hugomendoza" target="_blank" rel="noreferrer">
-          {ui.projects.moreGithub} <IconAsset name="github" size={18} />
+          {ui.projects.moreGithub} <AssetIcon src="/assets/icons/github.svg" size={18} />
         </a>
       </div>
     </div>

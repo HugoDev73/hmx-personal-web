@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import IconAsset from '../../components/ui/IconAsset.astro';
+import AssetIcon from '../../components/ui/AssetIcon.astro';
 import { projects } from '../../data/projects';
 import { ui } from '../../i18n/es';
 
@@ -27,8 +27,8 @@ const { project } = Astro.props;
             {project.technologies.map((tech) => <span class="chip">{tech}</span>)}
           </div>
           <div class="project-detail__actions">
-            <a class="button button--primary" href={project.links.live}>{ui.detail.live} <IconAsset name="external-link" size={18} /></a>
-            <a class="button button--outline" href={project.links.github}>{ui.detail.github} <IconAsset name="github" size={18} /></a>
+            <a class="button button--primary" href={project.links.live}>{ui.detail.live} <AssetIcon src="/assets/icons/external-link.svg" size={18} /></a>
+            <a class="button button--outline" href={project.links.github}>{ui.detail.github} <AssetIcon src="/assets/icons/github.svg" size={18} /></a>
           </div>
         </div>
         <div class="project-detail__hero-media">

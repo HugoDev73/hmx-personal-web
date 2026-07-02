@@ -35,6 +35,6 @@ export const specialtyItems = [
   {
     title: 'Astro',
     description: 'Sitios rápidos, ligeros y optimizados para contenido y performance.',
-    icon: 'astro',
+    icon: 'astro-mono',
   },
 ] as const;

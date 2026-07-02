@@ -1,8 +1,7 @@
 ---
 import { profile } from '../../data/profile';
 import { ui } from '../../i18n/es';
-import IconAsset from '../ui/IconAsset.astro';
-import SvgMaskIcon from '../ui/SvgMaskIcon.astro';
+import AssetIcon from '../ui/AssetIcon.astro';
 ---
 
 <section class="hero">
@@ -17,8 +16,8 @@ import SvgMaskIcon from '../ui/SvgMaskIcon.astro';
     <h1 class="hero__title">{ui.hero.title}</h1>
     <p class="hero__description">{ui.hero.description}</p>
     <div class="hero__actions">
-      <a class="button button--primary" href="/proyectos">{ui.hero.primaryCta} <IconAsset name="arrow-right" size={18} /></a>
-      <a class="button button--outline" href={`mailto:${profile.email}`}>{ui.hero.secondaryCta} <IconAsset name="mail" size={18} /></a>
+      <a class="button button--primary" href="/proyectos">{ui.hero.primaryCta} <AssetIcon src="/assets/icons/arrow-right.svg" size={18} /></a>
+      <a class="button button--outline" href={`mailto:${profile.email}`}>{ui.hero.secondaryCta} <AssetIcon src="/assets/icons/mail.svg" size={18} /></a>
     </div>
   </div>
 
@@ -33,7 +32,7 @@ import SvgMaskIcon from '../ui/SvgMaskIcon.astro';
   <div class="hero__social-links" aria-label="Redes sociales">
     {profile.socialLinks.map((link) => (
       <a class="hero__social-link" href={link.href} target="_blank" rel="noreferrer" aria-label={link.label}>
-        <SvgMaskIcon src={`/assets/icons/${link.icon}.svg`} size={19} />
+        <AssetIcon src={`/assets/icons/${link.icon}.svg`} size={19} />
       </a>
     ))}
   </div>

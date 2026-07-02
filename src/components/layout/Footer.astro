@@ -1,7 +1,7 @@
 ---
 import { profile } from '../../data/profile';
 import { ui } from '../../i18n/es';
-import SvgMaskIcon from '../ui/SvgMaskIcon.astro';
+import AssetIcon from '../ui/AssetIcon.astro';
 ---
 
 <footer class="site-footer">
@@ -16,7 +16,7 @@ import SvgMaskIcon from '../ui/SvgMaskIcon.astro';
   <div class="site-footer__links">
     {profile.socialLinks.map((link) => (
       <a class="site-footer__link" href={link.href} target="_blank" rel="noreferrer">
-        <SvgMaskIcon src={`/assets/icons/${link.icon}.svg`} size={16} />
+        <AssetIcon src={`/assets/icons/${link.icon}.svg`} size={16} />
         <span>{link.label}</span>
       </a>
     ))}

@@ -1,6 +1,6 @@
 ---
 import type { Project } from '../../data/projects';
-import IconAsset from '../ui/IconAsset.astro';
+import AssetIcon from '../ui/AssetIcon.astro';
 
 type Props = {
   project: Project;
@@ -23,7 +23,7 @@ const { project, compact = false } = Astro.props;
       </div>
     </div>
     <a class="icon-link" href={`/proyectos/${project.slug}`} aria-label={`Abrir ${project.title}`}>
-      <IconAsset name="arrow-up-right" size={19} />
+      <AssetIcon src="/assets/icons/arrow-up-right.svg" size={19} />
     </a>
   </div>
 </article>

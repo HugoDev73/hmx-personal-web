@@ -1,8 +1,7 @@
 ---
 import { specialtyItems } from '../../data/specialties';
 import { ui } from '../../i18n/es';
-import IconAsset from '../ui/IconAsset.astro';
-import SpecialtyIcon from '../ui/SpecialtyIcon.astro';
+import AssetIcon from '../ui/AssetIcon.astro';
 ---
 
 <section class="section--tight specialties">
@@ -13,14 +12,14 @@ import SpecialtyIcon from '../ui/SpecialtyIcon.astro';
       {specialtyItems.map((item) => (
         <article class="specialties__card">
           <div class:list={['specialties__mark', `specialties__mark--${item.icon}`]}>
-            <SpecialtyIcon name={item.icon} size={32} />
+            <AssetIcon src={`/assets/icons/${item.icon}.svg`} size={32} />
           </div>
           <div class="specialties__content">
             <h3 class="specialties__card-title">{item.title}</h3>
             <p class="specialties__description">{item.description}</p>
           </div>
           <a class="icon-link" href="/proyectos" aria-label={`Ver proyectos de ${item.title}`}>
-            <IconAsset name="arrow-right" size={19} />
+            <AssetIcon src="/assets/icons/arrow-right.svg" size={19} />
           </a>
         </article>
       ))}
@@ -74,7 +73,7 @@ import SpecialtyIcon from '../ui/SpecialtyIcon.astro';
     background: var(--color-secondary);
   }
 
-  .specialties__mark--astro {
+  .specialties__mark--astro-mono {
     background: var(--color-primary);
   }
 
