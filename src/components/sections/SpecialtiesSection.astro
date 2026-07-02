@@ -35,19 +35,28 @@ import AssetIcon from '../ui/AssetIcon.astro';
   .specialties__grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: clamp(18px, 3vw, 28px);
+    gap: clamp(18px, 2.4vw, 28px);
   }
 
   .specialties__card {
-    display: grid;
-    grid-template-columns: 64px 1fr auto;
-    align-items: center;
-    gap: 20px;
-    min-height: 160px;
+    display: flex;
+    min-height: 292px;
+    flex-direction: column;
+    align-items: flex-start;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-xl);
     background: #ffffff;
     padding: 28px;
+    transition:
+      transform var(--transition-base),
+      border-color var(--transition-base),
+      box-shadow var(--transition-base);
+  }
+
+  .specialties__card:hover {
+    transform: translateY(-3px);
+    border-color: var(--color-border-strong);
+    box-shadow: var(--shadow-md);
   }
 
   .specialties__mark {
@@ -58,6 +67,11 @@ import AssetIcon from '../ui/AssetIcon.astro';
     border-radius: 18px;
     background: var(--color-primary);
     color: #ffffff;
+  }
+
+  .specialties__content {
+    width: 100%;
+    margin-top: 24px;
   }
 
   .specialties__mark--angular {
@@ -79,13 +93,29 @@ import AssetIcon from '../ui/AssetIcon.astro';
 
   .specialties__card-title {
     margin: 0;
-    font-size: 1.15rem;
+    color: var(--color-primary);
+    font-size: 1.12rem;
+    line-height: 1.25;
   }
 
   .specialties__description {
-    margin: 10px 0 0;
+    max-width: 24ch;
+    margin: 12px 0 0;
     color: var(--color-text-secondary);
-    line-height: 1.55;
+    line-height: 1.65;
+  }
+
+  .specialties__card .icon-link {
+    width: 42px;
+    height: 42px;
+    margin-top: auto;
+    align-self: flex-end;
+    color: var(--color-primary);
+  }
+
+  .specialties__card:hover .icon-link {
+    border-color: var(--color-secondary);
+    color: var(--color-secondary);
   }
 
   @media (max-width: 1100px) {
@@ -102,8 +132,12 @@ import AssetIcon from '../ui/AssetIcon.astro';
 
   @media (max-width: 560px) {
     .specialties__card {
-      grid-template-columns: 64px 1fr auto;
+      min-height: 240px;
       padding: 18px;
+    }
+
+    .specialties__description {
+      max-width: none;
     }
   }
 </style>

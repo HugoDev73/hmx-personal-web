@@ -26,7 +26,7 @@ export const ui = {
     sort: 'Más recientes',
   },
   specialties: {
-    title: 'Especialidades',
+    title: 'Áreas de enfoque',
   },
   detail: {
     back: 'Volver a proyectos',
