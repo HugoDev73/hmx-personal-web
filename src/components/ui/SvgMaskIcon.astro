@@ -1,0 +1,49 @@
+---
+type CssLength = number | string;
+
+type Props = {
+  src: string;
+  label?: string;
+  size?: CssLength;
+  decorative?: boolean;
+  class?: string;
+};
+
+const {
+  src,
+  label,
+  size = 20,
+  decorative = true,
+  class: className,
+} = Astro.props;
+
+const toCssLength = (value: CssLength) => (typeof value === 'number' ? `${value}px` : value);
+const accessibleLabel =
+  label ?? src.split('/').pop()?.replace(/\.[^.]+$/, '').replace(/[-_]+/g, ' ') ?? 'Icon';
+
+const iconStyle = [
+  `--icon-src: url("${src}")`,
+  `--icon-size: ${toCssLength(size)}`,
+  '--icon-color: currentColor',
+].join('; ');
+---
+
+<span
+  class:list={['svg-mask-icon', className]}
+  style={iconStyle}
+  aria-hidden={decorative ? 'true' : undefined}
+  aria-label={!decorative ? accessibleLabel : undefined}
+  role={!decorative ? 'img' : undefined}
+></span>
+
+<style>
+  .svg-mask-icon {
+    display: inline-block;
+    width: var(--icon-size);
+    height: var(--icon-size);
+    flex: 0 0 auto;
+    background-color: var(--icon-color);
+    mask: var(--icon-src) center / contain no-repeat;
+    -webkit-mask: var(--icon-src) center / contain no-repeat;
+  }
+</style>
