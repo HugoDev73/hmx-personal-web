@@ -9,7 +9,7 @@ type Props = {
 const { currentPath } = Astro.props;
 ---
 
-<header class="site-header">
+<header class="site-header" data-site-header>
   <a class="site-header__brand" href="/" aria-label={`${profile.name} inicio`}>
     <img class="site-header__brand-image" src="/assets/brand/logo.svg" alt="" />
     <span class="site-header__brand-text">{profile.initials}<b>.</b></span>
@@ -37,6 +37,8 @@ const { currentPath } = Astro.props;
 
 <style>
   .site-header {
+    position: relative;
+    z-index: 10;
     display: flex;
     min-height: 86px;
     align-items: center;
@@ -118,33 +120,144 @@ const { currentPath } = Astro.props;
     width: 48px;
     height: 48px;
     border: 0;
+    border-radius: 14px;
     background: transparent;
     padding: 8px;
+    cursor: pointer;
   }
 
   .site-header__menu-line {
     display: block;
+    width: 30px;
     height: 4px;
     margin: 5px 0;
     border-radius: var(--radius-pill);
     background: var(--color-primary);
+    transition:
+      opacity var(--transition-base),
+      transform var(--transition-base);
   }
 
   @media (max-width: 760px) {
+    .site-header {
+      min-height: 78px;
+      padding-inline: 22px;
+    }
+
     .site-header__nav {
-      display: none;
+      position: absolute;
+      top: calc(100% + 1px);
+      right: 14px;
+      left: 14px;
+      display: grid;
+      gap: 8px;
+      border: 1px solid var(--color-border-subtle);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.96);
+      padding: 14px;
+      box-shadow: var(--shadow-md);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-8px);
+      transition:
+        opacity var(--transition-base),
+        transform var(--transition-base);
+      visibility: hidden;
+      backdrop-filter: blur(14px);
+    }
+
+    .site-header--menu-open .site-header__nav {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+      visibility: visible;
+    }
+
+    .site-header__nav-link {
+      min-height: 48px;
+      justify-content: center;
+      border-radius: 16px;
+      font-size: 0.96rem;
+    }
+
+    .site-header__nav-link--active::after {
+      bottom: 7px;
+    }
+
+    .site-header__nav-link--contact {
+      min-height: 50px;
+      margin-top: 4px;
     }
 
     .site-header__menu-button {
-      display: block;
+      display: inline-grid;
+      place-items: center;
     }
 
-    .site-header__brand-image {
-      display: none;
+    .site-header__menu-button:hover {
+      background: var(--color-background-soft);
     }
 
-    .site-header__brand-text {
-      display: inline;
+    .site-header--menu-open .site-header__menu-line:nth-child(1) {
+      transform: translateY(9px) rotate(45deg);
+    }
+
+    .site-header--menu-open .site-header__menu-line:nth-child(2) {
+      opacity: 0;
+    }
+
+    .site-header--menu-open .site-header__menu-line:nth-child(3) {
+      transform: translateY(-9px) rotate(-45deg);
     }
   }
 </style>
+
+<script>
+  const header = document.querySelector('[data-site-header]');
+  const nav = document.querySelector('.site-header__nav');
+  const button = document.querySelector('.site-header__menu-button');
+
+  if (header instanceof HTMLElement && nav instanceof HTMLElement && button instanceof HTMLButtonElement) {
+    nav.id = nav.id || 'site-navigation';
+    button.setAttribute('aria-controls', nav.id);
+    button.setAttribute('aria-expanded', 'false');
+    button.setAttribute('aria-label', 'Abrir menu');
+
+    const setMenuState = (isOpen: boolean) => {
+      header.classList.toggle('site-header--menu-open', isOpen);
+      button.setAttribute('aria-expanded', String(isOpen));
+      button.setAttribute('aria-label', isOpen ? 'Cerrar menu' : 'Abrir menu');
+    };
+
+    button.addEventListener('click', () => {
+      setMenuState(!header.classList.contains('site-header--menu-open'));
+    });
+
+    nav.addEventListener('click', (event) => {
+      const target = event.target;
+      if (target instanceof Element && target.closest('a')) {
+        setMenuState(false);
+      }
+    });
+
+    document.addEventListener('click', (event) => {
+      const target = event.target;
+      if (target instanceof Node && !header.contains(target)) {
+        setMenuState(false);
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && header.classList.contains('site-header--menu-open')) {
+        setMenuState(false);
+        button.focus();
+      }
+    });
+
+    window.matchMedia('(min-width: 761px)').addEventListener('change', (event) => {
+      if (event.matches) {
+        setMenuState(false);
+      }
+    });
+  }
+</script>
