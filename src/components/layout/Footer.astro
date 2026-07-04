@@ -2,6 +2,8 @@
 import { profile } from '../../data/profile';
 import { ui } from '../../i18n/es';
 import AssetIcon from '../ui/AssetIcon.astro';
+
+const visibleSocialLinks = profile.socialLinks.filter((link) => link.visible);
 ---
 
 <footer class="site-footer">
@@ -14,7 +16,7 @@ import AssetIcon from '../ui/AssetIcon.astro';
   </div>
 
   <div class="site-footer__links">
-    {profile.socialLinks.map((link) => (
+    {visibleSocialLinks.map((link) => (
       <a class="site-footer__link" href={link.href} target="_blank" rel="noreferrer">
         <AssetIcon src={`/assets/icons/${link.icon}.svg`} size={16} />
         <span>{link.label}</span>

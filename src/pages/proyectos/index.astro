@@ -2,8 +2,11 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectCard from '../../components/project/ProjectCard.astro';
 import AssetIcon from '../../components/ui/AssetIcon.astro';
+import { profile } from '../../data/profile';
 import { projects } from '../../data/projects';
 import { ui } from '../../i18n/es';
+
+const githubUrl = profile.socialLinks.find((link) => link.label === 'GitHub' && link.visible)?.href ?? '#';
 ---
 
 <BaseLayout title="Proyectos - Hugo Mendoza" description={ui.projects.description}>
@@ -13,7 +16,7 @@ import { ui } from '../../i18n/es';
         <p class="eyebrow">{ui.projects.eyebrow}</p>
         <h1 class="projects-page__title">{ui.projects.title}</h1>
         <p class="projects-page__lead">{ui.projects.description}</p>
-        <a class="text-link projects-page__talk-link" href="mailto:hola@hmx.dev">{ui.projects.talk} <span class="text-link__icon" aria-hidden="true"><AssetIcon src="/assets/icons/mail.svg" size={18} /></span></a>
+        <a class="text-link projects-page__talk-link" href={`mailto:${profile.email}`}>{ui.projects.talk} <span class="text-link__icon" aria-hidden="true"><AssetIcon src="/assets/icons/mail.svg" size={18} /></span></a>
       </div>
       <div class="projects-page__brand-shape" aria-hidden="true">
         <span></span><span></span><span></span><span></span><span></span><span></span>
@@ -37,7 +40,7 @@ import { ui } from '../../i18n/es';
       </div>
 
       <div class="projects-page__more">
-        <a class="button button--outline" href="https://github.com/hugomendoza" target="_blank" rel="noreferrer">
+        <a class="button button--outline" href={githubUrl} target="_blank" rel="noreferrer">
           {ui.projects.moreGithub} <AssetIcon src="/assets/icons/github.svg" size={18} />
         </a>
       </div>

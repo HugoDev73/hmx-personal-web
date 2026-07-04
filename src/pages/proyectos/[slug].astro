@@ -12,6 +12,8 @@ export function getStaticPaths() {
 }
 
 const { project } = Astro.props;
+
+const hasProjectLinks = Boolean(project.links.live || project.links.github);
 ---
 
 <BaseLayout title={`${project.title} - Hugo Mendoza`} description={project.summary}>
@@ -26,10 +28,12 @@ const { project } = Astro.props;
           <div class="project-detail__chips">
             {project.technologies.map((tech) => <span class="chip">{tech}</span>)}
           </div>
-          <div class="project-detail__actions">
-            <a class="button button--primary" href={project.links.live}>{ui.detail.live} <AssetIcon src="/assets/icons/external-link.svg" size={18} /></a>
-            <a class="button button--outline" href={project.links.github}>{ui.detail.github} <AssetIcon src="/assets/icons/github.svg" size={18} /></a>
-          </div>
+          {hasProjectLinks && (
+            <div class="project-detail__actions">
+              {project.links.live && <a class="button button--primary" href={project.links.live} target="_blank" rel="noreferrer">{ui.detail.live} <AssetIcon src="/assets/icons/external-link.svg" size={18} /></a>}
+              {project.links.github && <a class="button button--outline" href={project.links.github} target="_blank" rel="noreferrer">{ui.detail.github} <AssetIcon src="/assets/icons/github.svg" size={18} /></a>}
+            </div>
+          )}
         </div>
         <div class="project-detail__hero-media">
           <img class="project-detail__hero-image" src={project.images.hero} alt={`Imagen principal de ${project.title}`} />

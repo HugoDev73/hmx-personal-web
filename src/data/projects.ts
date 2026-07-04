@@ -11,8 +11,8 @@ export type Project = {
   featured: boolean;
   technologies: string[];
   links: {
-    live: string;
-    github: string;
+    live?: string;
+    github?: string;
   };
   images: {
     cover: string;
@@ -40,7 +40,7 @@ export const projects: Project[] = [
     category: 'Web',
     featured: true,
     technologies: ['Angular', 'TypeScript', 'Tailwind CSS', 'Firebase'],
-    links: { live: '#', github: '#' },
+    links: {},
     images: { cover: mockupProjects, hero: mockupProjects, gallery: [mockupProjects, mockupHome, mockupMobile] },
     about: [
       'TaskFlow nació con el objetivo de simplificar la gestión de tareas en equipos de trabajo. Permite crear proyectos, asignar tareas, establecer fechas límite y hacer seguimiento del progreso en tiempo real.',
@@ -67,7 +67,7 @@ export const projects: Project[] = [
     category: 'Web',
     featured: true,
     technologies: ['Angular', 'TypeScript', 'UI/UX', 'Firebase'],
-    links: { live: '#', github: '#' },
+    links: {},
     images: { cover: mockupHome, hero: mockupHome, gallery: [mockupHome, mockupProjects] },
     about: ['TrackYour explora una experiencia clara para consultar movimientos, presupuestos y tendencias financieras sin saturar al usuario.'],
     features: ['Panel de métricas.', 'Visualización de gastos.', 'Objetivos de ahorro.', 'Diseño adaptable.'],
@@ -84,7 +84,7 @@ export const projects: Project[] = [
     category: 'Android',
     featured: true,
     technologies: ['Android', 'Kotlin', 'UI/UX', 'REST API'],
-    links: { live: '#', github: '#' },
+    links: {},
     images: { cover: mockupMobile, hero: mockupMobile, gallery: [mockupMobile, mockupHome] },
     about: ['GreenStay propone una navegación mobile enfocada en exploración rápida, fichas visuales y acciones simples para reservar.'],
     features: ['Exploración de alojamientos.', 'Reservas mobile.', 'Filtros por categoría.', 'Interfaz accesible.'],
@@ -101,7 +101,7 @@ export const projects: Project[] = [
     category: 'Web',
     featured: false,
     technologies: ['Angular', 'Chart.js', 'Supabase'],
-    links: { live: '#', github: '#' },
+    links: {},
     images: { cover: mockupProjects, hero: mockupProjects, gallery: [mockupProjects] },
     about: ['FinanzIA organiza información financiera en vistas escaneables para apoyar mejores decisiones personales.'],
     features: ['Análisis de gastos.', 'Gráficas interactivas.', 'Categorización automática.', 'Reportes mensuales.'],
@@ -118,7 +118,7 @@ export const projects: Project[] = [
     category: 'Mobile',
     featured: false,
     technologies: ['Kotlin', 'Jetpack Compose', 'Room'],
-    links: { live: '#', github: '#' },
+    links: {},
     images: { cover: mockupMobile, hero: mockupMobile, gallery: [mockupMobile] },
     about: ['TrackMyFit concentra rutinas, métricas y hábitos en una experiencia mobile rápida de consultar.'],
     features: ['Registro de rutinas.', 'Historial de progreso.', 'Base de datos local.', 'Modo oscuro.'],
@@ -135,7 +135,7 @@ export const projects: Project[] = [
     category: 'Web',
     featured: false,
     technologies: ['React', 'TypeScript', 'Recharts'],
-    links: { live: '#', github: '#' },
+    links: {},
     images: { cover: mockupProjects, hero: mockupProjects, gallery: [mockupProjects] },
     about: ['DevMetrics traduce información técnica en paneles visuales para detectar problemas con rapidez.'],
     features: ['Monitoreo de métricas.', 'Filtros por periodo.', 'Alertas visuales.', 'Panel responsivo.'],

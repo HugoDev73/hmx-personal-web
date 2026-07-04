@@ -2,6 +2,21 @@
 import { specialtyItems } from '../../data/specialties';
 import { ui } from '../../i18n/es';
 import AssetIcon from '../ui/AssetIcon.astro';
+
+const toSoftColor = (hexColor: string, opacity = 0.14) => {
+  const hex = hexColor.replace('#', '');
+  const value = Number.parseInt(hex.length === 3 ? hex.split('').map((char) => char + char).join('') : hex, 16);
+  const red = (value >> 16) & 255;
+  const green = (value >> 8) & 255;
+  const blue = value & 255;
+
+  return `rgba(${red}, ${green}, ${blue}, ${opacity})`;
+};
+
+const getSpecialtyStyle = (color: string) => [
+  `--specialty-color: ${color}`,
+  `--specialty-color-soft: ${toSoftColor(color)}`,
+].join('; ');
 ---
 
 <section class="section--tight specialties">
@@ -11,8 +26,8 @@ import AssetIcon from '../ui/AssetIcon.astro';
     <div class="specialties__grid">
       {specialtyItems.map((item) => (
         <article class="specialties__card">
-          <div class:list={['specialties__mark', `specialties__mark--${item.icon}`]}>
-            <AssetIcon src={`/assets/icons/${item.icon}.svg`} size={32} />
+          <div class="specialties__mark" style={getSpecialtyStyle(item.color)}>
+            <AssetIcon src={`/assets/icons/${item.icon}.svg`} size={16} />
           </div>
           <div class="specialties__content">
             <h3 class="specialties__card-title">{item.title}</h3>
@@ -35,18 +50,18 @@ import AssetIcon from '../ui/AssetIcon.astro';
   .specialties__grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: clamp(18px, 2.4vw, 28px);
+    gap: clamp(18px, 2vw, 24px);
   }
 
   .specialties__card {
     display: flex;
-    min-height: 292px;
+    min-height: 258px;
     flex-direction: column;
     align-items: flex-start;
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-xl);
+    border-radius: 18px;
     background: #ffffff;
-    padding: 28px;
+    padding: 24px;
     transition:
       transform var(--transition-base),
       border-color var(--transition-base),
@@ -56,66 +71,52 @@ import AssetIcon from '../ui/AssetIcon.astro';
   .specialties__card:hover {
     transform: translateY(-3px);
     border-color: var(--color-border-strong);
-    box-shadow: var(--shadow-md);
+    box-shadow: 0 20px 42px rgba(17, 24, 39, 0.08);
   }
 
   .specialties__mark {
     display: grid;
-    width: 58px;
-    height: 58px;
+    width: 44px;
+    height: 44px;
     place-items: center;
-    border-radius: 18px;
-    background: var(--color-primary);
-    color: #ffffff;
+    border-radius: 12px;
+    background: var(--specialty-color-soft);
+    color: var(--specialty-color);
   }
 
   .specialties__content {
     width: 100%;
-    margin-top: 24px;
-  }
-
-  .specialties__mark--angular {
-    background: linear-gradient(135deg, #e94560 0%, #c2185b 55%, #6c00f5 100%);
-  }
-
-  .specialties__mark--android {
-    background: #3ddc84;
-    color: #111827;
-  }
-
-  .specialties__mark--frame {
-    background: var(--color-secondary);
-  }
-
-  .specialties__mark--astro-mono {
-    background: var(--color-primary);
+    margin-top: 20px;
   }
 
   .specialties__card-title {
     margin: 0;
     color: var(--color-primary);
-    font-size: 1.12rem;
+    font-size: 1.05rem;
     line-height: 1.25;
   }
 
   .specialties__description {
-    max-width: 24ch;
+    max-width: 21ch;
     margin: 12px 0 0;
     color: var(--color-text-secondary);
-    line-height: 1.65;
+    font-size: 0.93rem;
+    line-height: 1.55;
   }
 
   .specialties__card .icon-link {
-    width: 42px;
-    height: 42px;
+    width: 36px;
+    height: 36px;
     margin-top: auto;
     align-self: flex-end;
     color: var(--color-primary);
+    background: #ffffff;
   }
 
   .specialties__card:hover .icon-link {
-    border-color: var(--color-secondary);
-    color: var(--color-secondary);
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: #ffffff;
   }
 
   @media (max-width: 1100px) {
@@ -132,8 +133,8 @@ import AssetIcon from '../ui/AssetIcon.astro';
 
   @media (max-width: 560px) {
     .specialties__card {
-      min-height: 240px;
-      padding: 18px;
+      min-height: 232px;
+      padding: 22px;
     }
 
     .specialties__description {

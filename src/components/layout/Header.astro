@@ -7,6 +7,11 @@ type Props = {
 };
 
 const { currentPath } = Astro.props;
+
+const navItems = ui.nav.map((item) => ({
+  ...item,
+  href: item.href === 'mailto:' ? `mailto:${profile.email}` : item.href,
+}));
 ---
 
 <header class="site-header" data-site-header>
@@ -16,7 +21,7 @@ const { currentPath } = Astro.props;
   </a>
 
   <nav class="site-header__nav" aria-label="Navegación principal">
-    {ui.nav.map((item) => {
+    {navItems.map((item) => {
       const isActive = item.href === '/' ? currentPath === '/' : currentPath.startsWith(item.href);
       const isContact = item.label === 'Contacto';
       return (
@@ -213,11 +218,21 @@ const { currentPath } = Astro.props;
 </style>
 
 <script>
-  const header = document.querySelector('[data-site-header]');
-  const nav = document.querySelector('.site-header__nav');
-  const button = document.querySelector('.site-header__menu-button');
+  let menuController: AbortController | undefined;
 
-  if (header instanceof HTMLElement && nav instanceof HTMLElement && button instanceof HTMLButtonElement) {
+  const initMobileMenu = () => {
+    const header = document.querySelector('[data-site-header]');
+    const nav = document.querySelector('.site-header__nav');
+    const button = document.querySelector('.site-header__menu-button');
+
+    menuController?.abort();
+    menuController = new AbortController();
+    const { signal } = menuController;
+
+    if (!(header instanceof HTMLElement) || !(nav instanceof HTMLElement) || !(button instanceof HTMLButtonElement)) {
+      return;
+    }
+
     nav.id = nav.id || 'site-navigation';
     button.setAttribute('aria-controls', nav.id);
     button.setAttribute('aria-expanded', 'false');
@@ -229,35 +244,58 @@ const { currentPath } = Astro.props;
       button.setAttribute('aria-label', isOpen ? 'Cerrar menu' : 'Abrir menu');
     };
 
-    button.addEventListener('click', () => {
-      setMenuState(!header.classList.contains('site-header--menu-open'));
-    });
+    button.addEventListener(
+      'click',
+      () => {
+        setMenuState(!header.classList.contains('site-header--menu-open'));
+      },
+      { signal },
+    );
 
-    nav.addEventListener('click', (event) => {
-      const target = event.target;
-      if (target instanceof Element && target.closest('a')) {
-        setMenuState(false);
-      }
-    });
+    nav.addEventListener(
+      'click',
+      (event) => {
+        const target = event.target;
+        if (target instanceof Element && target.closest('a')) {
+          setMenuState(false);
+        }
+      },
+      { signal },
+    );
 
-    document.addEventListener('click', (event) => {
-      const target = event.target;
-      if (target instanceof Node && !header.contains(target)) {
-        setMenuState(false);
-      }
-    });
+    document.addEventListener(
+      'click',
+      (event) => {
+        const target = event.target;
+        if (target instanceof Node && !header.contains(target)) {
+          setMenuState(false);
+        }
+      },
+      { signal },
+    );
 
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && header.classList.contains('site-header--menu-open')) {
-        setMenuState(false);
-        button.focus();
-      }
-    });
+    document.addEventListener(
+      'keydown',
+      (event) => {
+        if (event.key === 'Escape' && header.classList.contains('site-header--menu-open')) {
+          setMenuState(false);
+          button.focus();
+        }
+      },
+      { signal },
+    );
 
-    window.matchMedia('(min-width: 761px)').addEventListener('change', (event) => {
-      if (event.matches) {
-        setMenuState(false);
-      }
-    });
-  }
+    window.matchMedia('(min-width: 761px)').addEventListener(
+      'change',
+      (event) => {
+        if (event.matches) {
+          setMenuState(false);
+        }
+      },
+      { signal },
+    );
+  };
+
+  initMobileMenu();
+  document.addEventListener('astro:page-load', initMobileMenu);
 </script>
