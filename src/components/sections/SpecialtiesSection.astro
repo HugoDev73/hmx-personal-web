@@ -17,6 +17,11 @@ const getSpecialtyStyle = (color: string) => [
   `--specialty-color: ${color}`,
   `--specialty-color-soft: ${toSoftColor(color)}`,
 ].join('; ');
+
+const styledSpecialtyItems = specialtyItems.map((item) => ({
+  ...item,
+  style: getSpecialtyStyle(item.color),
+}));
 ---
 
 <section class="section--tight specialties">
@@ -24,9 +29,9 @@ const getSpecialtyStyle = (color: string) => [
     <h2 class="section-title specialties__title">{ui.specialties.title}</h2>
 
     <div class="specialties__grid">
-      {specialtyItems.map((item) => (
+      {styledSpecialtyItems.map((item) => (
         <article class="specialties__card">
-          <div class="specialties__mark" style={getSpecialtyStyle(item.color)}>
+          <div class="specialties__mark" style={item.style}>
             <AssetIcon src={`/assets/icons/${item.icon}.svg`} size={16} />
           </div>
           <div class="specialties__content">
