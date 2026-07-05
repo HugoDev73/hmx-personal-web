@@ -116,6 +116,23 @@
   color: #ffffff;
 }
 
+.interactive-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: #ffffff;
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform var(--transition-base),
+    border-color var(--transition-base),
+    box-shadow var(--transition-base);
+}
+
+.interactive-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-md);
+}
+
 .icon-link {
   display: inline-grid;
   width: 48px;

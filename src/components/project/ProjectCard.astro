@@ -10,7 +10,7 @@ type Props = {
 const { project, compact = false } = Astro.props;
 ---
 
-<article class:list={['project-card', { 'project-card--compact': compact }]}>
+<article class:list={['project-card', 'interactive-card', { 'project-card--compact': compact }]}>
   <a class="project-card__media" href={`/proyectos/${project.slug}`} aria-label={`Ver proyecto ${project.title}`}>
     <img class="project-card__image" src={project.images.cover} alt={`Mockup de ${project.title}`} loading="lazy" />
   </a>
@@ -23,7 +23,7 @@ const { project, compact = false } = Astro.props;
       </div>
     </div>
     <a class="icon-link" href={`/proyectos/${project.slug}`} aria-label={`Abrir ${project.title}`}>
-      <AssetIcon src="/assets/icons/arrow-up-right.svg" size={19} />
+      <AssetIcon src="/assets/icons/arrow-right.svg" size={19} />
     </a>
   </div>
 </article>
@@ -31,20 +31,6 @@ const { project, compact = false } = Astro.props;
 <style>
   .project-card {
     overflow: hidden;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-xl);
-    background: #ffffff;
-    box-shadow: var(--shadow-sm);
-    transition:
-      transform var(--transition-base),
-      border-color var(--transition-base),
-      box-shadow var(--transition-base);
-  }
-
-  .project-card:hover {
-    transform: translateY(-3px);
-    border-color: var(--color-border-strong);
-    box-shadow: var(--shadow-md);
   }
 
   .project-card__media {

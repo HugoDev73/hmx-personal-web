@@ -39,6 +39,6 @@ export const ui = {
     gallery: 'Galería de capturas',
   },
   footer: {
-    text: 'Desarrollando experiencias digitales modernas, funcionales y centradas en el usuario.',
+    text: 'Frontend Developer. Diseño y código en equilibrio para construir interfaces claras, rápidas y accesibles.',
   },
 } as const;
